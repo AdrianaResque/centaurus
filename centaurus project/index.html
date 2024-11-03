@@ -211,14 +211,30 @@
 		text-decoration: none;
 	}
  	
+	#centaurusNavbar{
+		box-shadow: 0 0.02rem 0.10rem #022829;
+	}
+
+	#centauruslogo{
+		color: #07595c;
+
+	}
+	#centaurusimagem{
+		width: 400px;
+	}
+	.cardplano{
+		width: 18rem;
+
+	}
+	
 		</style>
 
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="box-shadow: 0 0.02rem 0.10rem #022829;">
+		<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" id="centaurusNavbar">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#"><img src="centaurus.jpg" width="32px"><span style="color: #07595c;">Centaurus</span> Gym</a>
+				<a class="navbar-brand" href="#"><img src="centaurus.jpg" width="32px"><span id="centauruslogo">Centaurus</span> Gym</a>
 		
 				<!-- Botão para visualização mobile -->
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
@@ -230,9 +246,6 @@
 					<ul class="navbar-nav ms-auto">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#home">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="login.html" target="_blank">Login</a >
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" href="#premium">Planos</a>
@@ -258,7 +271,7 @@
 			<h4>Fique saudável e venha treinar na melhor rede de academias do Rio de Janeiro, venha para a Centaurus!</h4>
 			<p>Conheca a Centaurus e aproveite nossos planos com descontos!</p>
 		</div>
-		<div class="home-img"><img src="centaurus.jpg" style="width: 400px;"></div>
+		<div class="home-img"><img src="centaurus.jpg" id="centaurusimagem"></div>
 	</section>
 	
 	<div class="caixa1">
@@ -405,7 +418,7 @@
                 </div>         
                 <div class="row my-5">
                     <div class="card-group">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card cardplano" >
                             <div class="card-body">
                                 <button class="btn btn-primary disabled" type="button">1 semana gratuita com a assinatura*</button>
                                 
@@ -426,7 +439,7 @@
                             </div>
                         </div>
 
-                        <div class="card" style="width: 18rem;">
+                        <div class="card cardplano" >
                             <div class="card-body">
                                 <button class="btn btn-primary disabled" type="button">1 semana grátis com a assinatura*</button>
                                 
@@ -447,7 +460,7 @@
                             </div>
                         </div>
 
-                        <div class="card" style="width: 18rem;">
+                        <div class="card cardplano" >
                             <div class="card-body">
                                 <button class="btn btn-primary disabled" type="button">1 semana grátis com a assinatura*</button>
                                 
@@ -468,7 +481,7 @@
                             </div>
                         </div>
 
-                        <div class="card" style="width: 18rem;">
+                        <div class="card cardplano" >
                             <div class="card-body">
                                 <button class="btn btn-primary disabled" type="button">1 semana grátis com a assinatura</button>
                                 
@@ -532,7 +545,7 @@
 				<div class="col-md-4">
 					<ul>
 						<li>
-							<a href="https://www.instagram.com/centaurosgym_/" target="_blank"><img src="instagram.png"></a>
+							<a href="https://www.instagram.com/centaurusgym_/profilecard/?igsh=Z3d0ZGFzbjduZXk=/" target="_blank"><img src="instagram.png"></a>
 						</li>
 						<li>
 							<a href="https://www.facebook.com/share/Ph6NT7ezJ96tMSZF/?mibextid=LQQJ4d" target="_blank"><img src="facebook.png"></a>

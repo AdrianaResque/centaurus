@@ -1,68 +1,131 @@
 <div>
-    <h1 id="titulo">Cadastro</h1>
-    <p id="subtitulo">Complete suas informações</p>
-  </div>
-  <form>
-    <fieldset class="grupo">
-      <div class="campo">
+  <h1 id="titulo">Cadastro</h1>
+  <p id="subtitulo">Complete suas informações</p>
+</div>
+<form onsubmit="criarCadastro(event)">
+  <fieldset class="grupo">
+    <div class="campo">
       <label for="nome"><strong>Nome</strong></label>
       <input type="text" name="nome" id="nome" required></input>
-      </div>
-      <div class="campo">
-         <label for="sobrenome"><strong>Sobrenome</strong></label>
+    </div>
+    <div class="campo">
+      <label for="sobrenome"><strong>Sobrenome</strong></label>
       <input type="text" name="sobrenome" id="sobrenome" required>
-        </div>
-      </fieldset>
+    </div>
+  </fieldset>
   <br>
   <div class="campo">
-        <label for="email"><strong>Email</strong></label>
-      <input type="email" name="email" id="email" required>
+    <label for="email"><strong>Email</strong></label>
+    <input type="email" name="email" id="email" required>
+  </div>
+  <div class="campo">
+    <label for="endereco"><strong>Endereço</strong></label>
+    <input type="endereco" name="endereco" id="endereco" required>
   </div>
   <br>
   <div class="campo">
     <label><strong>Como conheceu a academia?</strong></label>
     <label>
-    <input type="radio" name="informacao" value="indicacao" checked>Indicação
-    </input>
+      <input type="radio" name="informacao" value="indicacao" checked>Indicação
+      </input>
     </label>
-  <label>
-  <input type="radio" name="informacao" value="internet">Internet
-    </input>
-  </label>
-  <label>
-  <input type="radio" name="informacao" value="outro">Outro
-    </input>
-</label>
-    </div>
-<br>
-<div class="campo">
-  <label for="senioridade"><strong> Plano </strong></label>
-  <select id="senioridade">
-    <option selected disable value="">Selecione</option>
-    <option>Individual</option>
-        <option>Da galera</option>
-        <option>Individual super power</option>
-        <option>Individual mega power</option>
+    <label>
+      <input type="radio" name="informacao" value="internet">Internet
+      </input>
+    </label>
+    <label>
+      <input type="radio" name="informacao" value="outro">Outro
+      </input>
+    </label>
+  </div>
+  <br>
+  <div class="campo">
+    <label for="plano"><strong> Plano </strong></label>
+    <select id="plano">
+      <option selected disable value="">Selecione</option>
+      <option>Individual</option>
+      <option>Da galera</option>
+      <option>Individual super power</option>
+      <option>Individual mega power</option>
     </select>
 
-</div>
-<fieldset class="grupo">
-  <div class="campo">
-    <label><strong>Selecione suas metas:</strong></label><br><br>
-    <input type="checkbox" id="selecao1" value="emagrecer">
-    <label>Emagrecer</label>
-     <input type="checkbox" id="selecao2" value="ganho-de-massa-muscular">
-    <label>Ganho de massa muscular</label>
-     <input type="checkbox" id="selecao3" value="saude">
-    <label>Saúde</label>
-     <input type="checkbox" id="selecao4" value="fortalecimento-muscular">
-    <label>Fortalecimento muscular</label>
   </div>
+  <fieldset class="grupo">
+    <div class="campo">
+      <label><strong>Selecione suas metas:</strong></label><br><br>
+      <input type="checkbox" id="selecao1">
+      <label>Emagrecer</label>
+      <input type="checkbox" id="selecao2">
+      <label>Ganho de massa muscular</label>
+      <input type="checkbox" id="selecao3">
+      <label>Saúde</label>
+      <input type="checkbox" id="selecao4">
+      <label>Fortalecimento muscular</label>
+    </div>
   </fieldset>
-<div class="campo">
-  <br>
-  <label><strong>Conte-ne o que espera de nós:</strong></label>
-  <textarea row="6" style="width: 26em" id="experiencia" nome="experiencia"></textarea>
-</div>
-<button class="botao" type="submit">Concluir</button>
-    </form>
+  <div class="campo">
+    <br>
+    <label><strong>Conte-nos o que espera de nós:</strong></label>
+    <textarea row="6" style="width: 26em" id="experiencia" nome="experiencia"></textarea>
+  </div>
+  <button class="botao" type="submit" >Concluir</button>
+</form>
+
+
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
+<script>
+  
+function criarCadastro (event){ 
+  event.preventDefault()
+  const primeiroNome = document.getElementById("nome");
+  const sobreNome = document.getElementById("sobrenome");
+  const email = document.getElementById("email");
+  const endereco = document.getElementById("endereco");
+  const plano = document.getElementById("plano");
+  const emagrecer = document.getElementById("selecao1");
+  const ganhoMassa = document.getElementById("selecao2");
+  const saude = document.getElementById("selecao3");
+  const fortalecimentoMuscular = document.getElementById("selecao4");
+  const experiencia = document.getElementById("experiencia");
+  const informacao = document.querySelector('input[name="informacao"]:checked')
+ 
+
+  // Set the region
+  AWS.config.update({
+    region: "sa-east-1", credentials: new AWS.Credentials({
+      accessKeyId: 'AKIAXGZAL2RY5M2JUMTG', secretAccessKey: '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'
+    })
+  });
+
+  // Create the DynamoDB service object
+  var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+
+  var params = {
+    TableName: "membros-centaurus",
+    Item: {
+      id: { S: crypto.randomUUID()},
+      primeiroNome: { S: primeiroNome.value},
+      sobreNome: { S: sobreNome.value},
+      email: { S: email.value},
+      endereco: { S: endereco.value},
+      informacao: { S: informacao.value},
+      plano: { S: plano.value},
+      emagrecer: { BOOL: emagrecer.checked},
+      ganhoMassa: { BOOL: ganhoMassa.checked},
+      saude: { BOOL: saude.checked},
+      fortalecimentoMuscular: { BOOL: fortalecimentoMuscular.checked},
+      experiencia: { S: experiencia.value},
+    },
+  };
+console.log(params)
+  // Call DynamoDB to add the item to the table
+  ddb.putItem(params, function (err, data) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Success", data);
+      window.location.href = "index.html";
+    }
+  });
+}
+</script>

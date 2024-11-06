@@ -68,64 +68,65 @@
     <label><strong>Conte-nos o que espera de nós:</strong></label>
     <textarea row="6" style="width: 26em" id="experiencia" nome="experiencia"></textarea>
   </div>
-  <button class="botao" type="submit" >Concluir</button>
+  <button class="botao" type="submit">Concluir</button>
 </form>
 
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
 <script>
-  
-function criarCadastro (event){ 
-  event.preventDefault()
-  const primeiroNome = document.getElementById("nome");
-  const sobreNome = document.getElementById("sobrenome");
-  const email = document.getElementById("email");
-  const endereco = document.getElementById("endereco");
-  const plano = document.getElementById("plano");
-  const emagrecer = document.getElementById("selecao1");
-  const ganhoMassa = document.getElementById("selecao2");
-  const saude = document.getElementById("selecao3");
-  const fortalecimentoMuscular = document.getElementById("selecao4");
-  const experiencia = document.getElementById("experiencia");
-  const informacao = document.querySelector('input[name="informacao"]:checked')
- 
 
-  // Set the region
-  AWS.config.update({
-    region: "sa-east-1", credentials: new AWS.Credentials({
-      accessKeyId: 'AKIAXGZAL2RY5M2JUMTG', secretAccessKey: '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'
-    })
-  });
+  function criarCadastro(event) {
+    event.preventDefault()
+    const primeiroNome = document.getElementById("nome");
+    const sobreNome = document.getElementById("sobrenome");
+    const email = document.getElementById("email");
+    const endereco = document.getElementById("endereco");
+    const plano = document.getElementById("plano");
+    const emagrecer = document.getElementById("selecao1");
+    const ganhoMassa = document.getElementById("selecao2");
+    const saude = document.getElementById("selecao3");
+    const fortalecimentoMuscular = document.getElementById("selecao4");
+    const experiencia = document.getElementById("experiencia");
+    const informacao = document.querySelector('input[name="informacao"]:checked')
 
-  // Create the DynamoDB service object
-  var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
-  var params = {
-    TableName: "membros-centaurus",
-    Item: {
-      id: { S: crypto.randomUUID()},
-      primeiroNome: { S: primeiroNome.value},
-      sobreNome: { S: sobreNome.value},
-      email: { S: email.value},
-      endereco: { S: endereco.value},
-      informacao: { S: informacao.value},
-      plano: { S: plano.value},
-      emagrecer: { BOOL: emagrecer.checked},
-      ganhoMassa: { BOOL: ganhoMassa.checked},
-      saude: { BOOL: saude.checked},
-      fortalecimentoMuscular: { BOOL: fortalecimentoMuscular.checked},
-      experiencia: { S: experiencia.value},
-    },
-  };
-console.log(params)
-  // Call DynamoDB to add the item to the table
-  ddb.putItem(params, function (err, data) {
-    if (err) {
-      console.log("Error", err);
-    } else {
-      console.log("Success", data);
-      window.location.href = "index.html";
-    }
-  });
-}
+    // Set the region
+    AWS.config.update({
+      region: "sa-east-1", credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: "sa-east-1:a3d29eda-1e4e-4784-98da-d46e2a1b7abe"
+      })
+    });
+
+    // Create the DynamoDB service object
+    var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+
+    var params = {
+      TableName: "membros-centaurus",
+      Item: {
+        id: { S: crypto.randomUUID() },
+        primeiroNome: { S: primeiroNome.value },
+        sobreNome: { S: sobreNome.value },
+        email: { S: email.value },
+        endereco: { S: endereco.value },
+        informacao: { S: informacao.value },
+        plano: { S: plano.value },
+        emagrecer: { BOOL: emagrecer.checked },
+        ganhoMassa: { BOOL: ganhoMassa.checked },
+        saude: { BOOL: saude.checked },
+        fortalecimentoMuscular: { BOOL: fortalecimentoMuscular.checked },
+        experiencia: { S: experiencia.value },
+      },
+    };
+    console.log(params)
+    // Call DynamoDB to add the item to the table
+    ddb.putItem(params, function (err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success", data);
+        alert("Seu cadastro foi realizado com sucesso!");
+        window.location.href = "index.html";
+      }
+    });
+  }
 </script>
